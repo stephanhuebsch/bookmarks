@@ -1,1 +1,2 @@
-Hello world!
+## EPÜ
+``javascript:(function(){x=prompt("Artikel EP%C3%9C\t%E2%86%92\ta87\nAusfOrd\t%E2%86%92\tr12a\nGebOrd\t%E2%86%92\tf2");if(/[a][0-9]{1,3}[a-z]{0,9}/.test(x)){window.location="https://www.epo.org//law-practice/legal-texts/html/epc/2020/d/ar"+x.substring(1)+".html"}else if(/[r][0-9]{1,3}[a-z]{0,9}/.test(x)){window.location="https://www.epo.org//law-practice/legal-texts/html/epc/2020/d/"+x+".html"}else if(/[f][0-9]{1,2}[a-z]{0,9}/.test(x)){window.location="https://www.epo.org//law-practice/legal-texts/html/epc/2020/d/articl"+x.substring(1)+".html"}})();``

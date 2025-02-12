@@ -4,7 +4,9 @@ javascript:(function(){
     // -------------------------
     const paragrafMappingsOriginal = {
         "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
-        "MuSchG": "10002963", "PatVEG": "10002458", "PatV-EG": "10002458",
+        "MuSchG": "10002963",
+        // Only include the correct one with hyphen.
+        "PatV-EG": "10002458",
         "PatAwG": "10002093", "PatAnwG": "10002093", "PAG": "20003819",
         "IO": "10001736", "EO": "10001700", "ZPO": "10001699", "ABGB": "10001622",
         "UGB": "10001702", "KSchG": "10002462", "KartG": "20004174",
@@ -21,9 +23,6 @@ javascript:(function(){
         "PVÜ": "10002271", "BVG": "10000138", "B-VG": "10000138",
         "EGJN": "10001696", "EGZPO": "10001698", "EGEO": "10001916"
     };
-    // New special mappings – note: the keys here have no associated lookup number,
-    // but have a URL template for when a number is given ("withNumber")
-    // and a fixed URL when no number is provided ("noNumber").
     const spezialMappingsOriginal = {
         "EPÜ": {
             noNumber: "https://www.epo.org/de/legal/epc/2020/convention.html",
@@ -91,21 +90,24 @@ javascript:(function(){
         }
     };
 
-    // Build lower-case lookup objects.
-    const paragrafMappings = {};
-    Object.keys(paragrafMappingsOriginal).forEach(key => {
-        paragrafMappings[key.toLowerCase()] = paragrafMappingsOriginal[key];
-    });
-    const artikelMappings = {};
-    Object.keys(artikelMappingsOriginal).forEach(key => {
-        artikelMappings[key.toLowerCase()] = artikelMappingsOriginal[key];
-    });
-    const spezialMappings = {};
-    Object.keys(spezialMappingsOriginal).forEach(key => {
-        spezialMappings[key.toLowerCase()] = spezialMappingsOriginal[key];
-    });
+    // -------------------------
+    // Build normalized mapping objects (lowercase & ignore hyphens)
+    // -------------------------
+    function buildNormalizedMapping(mappingOriginal) {
+        const normalized = {};
+        Object.keys(mappingOriginal).forEach(key => {
+            normalized[key.toLowerCase().replace(/-/g, '')] = mappingOriginal[key];
+        });
+        return normalized;
+    }
 
-    // Build a sorted list of all keys (original casing) for suggestions.
+    const paragrafMappingsNorm = buildNormalizedMapping(paragrafMappingsOriginal);
+    const artikelMappingsNorm  = buildNormalizedMapping(artikelMappingsOriginal);
+    const spezialMappingsNorm  = buildNormalizedMapping(spezialMappingsOriginal);
+
+    // -------------------------
+    // Build lower-case lookup objects for suggestions (keep original casing for display)
+    // -------------------------
     const alleGesetzeOriginal = [...Object.keys(paragrafMappingsOriginal),
                                   ...Object.keys(artikelMappingsOriginal),
                                   ...Object.keys(spezialMappingsOriginal)]
@@ -168,7 +170,6 @@ javascript:(function(){
     closeButton.style.fontSize = "12px";
     closeButton.style.lineHeight = "20px";
     closeButton.style.padding = "0";
-    closeButton.style.lineHeight = "20px";
     closeButton.onclick = function() {
         modal.remove();
         document.removeEventListener("keydown", escHandler);
@@ -272,9 +273,12 @@ javascript:(function(){
         let match = query.match(/^(?:(\d+[a-zA-Z]?\s+))?(.*)$/);
         let prefix = match[1] || "";
         let searchTerm = match[2] || "";
-        let matches = alleGesetzeOriginal.filter(gesetz =>
-            gesetz.toLowerCase().includes(searchTerm)
-        );
+        // Remove hyphens for matching purposes.
+        let sanitizedSearchTerm = searchTerm.replace(/-/g, '');
+        let matches = alleGesetzeOriginal.filter(gesetz => {
+            let sanitizedGesetz = gesetz.toLowerCase().replace(/-/g, '');
+            return sanitizedGesetz.includes(sanitizedSearchTerm);
+        });
         if (matches.length > 0 && searchTerm.length > 0) {
             suggestions.style.display = "block";
             matches.forEach(gesetz => {
@@ -360,43 +364,44 @@ javascript:(function(){
     });
 
     // -------------------------
-    // Submission: special mappings
+    // Submission: use normalized mappings (ignore hyphens)
     // -------------------------
     function submitInput() {
         document.body.style.cursor = "progress";
         let trimmed = input.value.trim().toLowerCase();
-        // First, check if the input starts with a number followed by some text.
+        // Check if the input starts with a number followed by some text.
         let match = trimmed.match(/^(\d+[a-z]?)\s+(.+)$/);
         if (match) {
             let number = match[1];
-            let lawKey = match[2].trim().toLowerCase();
+            // Normalize the law key by removing hyphens.
+            let lawKey = match[2].trim().toLowerCase().replace(/-/g, '');
             // Check for special mapping first.
-            if(spezialMappings.hasOwnProperty(lawKey)) {
-                // Replace {num} with the number.
-                let urlTemplate = spezialMappings[lawKey].withNumber;
+            if(spezialMappingsNorm.hasOwnProperty(lawKey)) {
+                let urlTemplate = spezialMappingsNorm[lawKey].withNumber;
                 let finalUrl = urlTemplate.replace("{num}", number);
                 window.location.href = finalUrl;
                 return;
             }
             // Fall back to normal mappings.
-            if (paragrafMappings[lawKey]) {
-                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[lawKey])}&Artikel=&Paragraf=${encodeURIComponent(number)}`;
-            } else if (artikelMappings[lawKey]) {
-                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[lawKey])}&Artikel=${encodeURIComponent(number)}&Paragraf=`;
+            if (paragrafMappingsNorm[lawKey]) {
+                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappingsNorm[lawKey])}&Artikel=&Paragraf=${encodeURIComponent(number)}`;
+            } else if (artikelMappingsNorm[lawKey]) {
+                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappingsNorm[lawKey])}&Artikel=${encodeURIComponent(number)}&Paragraf=`;
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
             }
         } else {
             // No number provided.
-            if(spezialMappings.hasOwnProperty(trimmed)) {
-                window.location.href = spezialMappings[trimmed].noNumber;
+            let normalizedInput = trimmed.replace(/-/g, '');
+            if(spezialMappingsNorm.hasOwnProperty(normalizedInput)) {
+                window.location.href = spezialMappingsNorm[normalizedInput].noNumber;
                 return;
             }
-            if (paragrafMappings[trimmed]) {
-                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[trimmed])}`;
-            } else if (artikelMappings[trimmed]) {
-                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[trimmed])}`;
+            if (paragrafMappingsNorm[normalizedInput]) {
+                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappingsNorm[normalizedInput])}`;
+            } else if (artikelMappingsNorm[normalizedInput]) {
+                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappingsNorm[normalizedInput])}`;
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";

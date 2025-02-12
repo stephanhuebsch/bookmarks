@@ -93,7 +93,6 @@
             withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
         }
     };
-
     // Build lower-case lookup objects.
     const paragrafMappings = {};
     Object.keys(paragrafMappingsOriginal).forEach(key => {
@@ -113,7 +112,6 @@
                                   ...Object.keys(artikelMappingsOriginal),
                                   ...Object.keys(spezialMappingsOriginal)]
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
     // -------------------------
     // Create modal elements
     // -------------------------
@@ -134,7 +132,6 @@
     modal.style.fontSize = "16px";
     modal.style.fontFamily = "Arial";
     modal.innerHTML = "<p style='font-size: 16px; margin-bottom: 10px; margin-top: 0; font-weight: bold; color: black'>Gesetzestexte</p><p style='font-size: 14px; margin-bottom: 10px; color: black'>Bitte ein Gesetz (zB PatG, ZPO, EPÜ) oder einen konkreten Paragraphen/Artikel (zB 22a&nbsp;PatG) eingeben:</p>";
-
     // Close button
     let closeButton = document.createElement("button");
     closeButton.textContent = "X";
@@ -157,7 +154,6 @@
         document.body.style.cursor = "default";
     };
     modal.appendChild(closeButton);
-
     // Input container
     let inputContainer = document.createElement("div");
     inputContainer.style.position = "relative";
@@ -166,7 +162,6 @@
     inputContainer.style.marginLeft = "10%";
     inputContainer.style.marginRight = "10%";
     modal.appendChild(inputContainer);
-
     // Input field
     let input = document.createElement("input");
     input.type = "text";
@@ -179,7 +174,6 @@
     input.style.borderRadius = "5px";
     input.style.outline = "none";
     inputContainer.appendChild(input);
-
     // Suggestions dropdown
     let suggestions = document.createElement("ul");
     suggestions.style.listStyleType = "none";
@@ -200,7 +194,6 @@
     suggestions.style.background = "white";
     suggestions.style.display = "none";
     inputContainer.appendChild(suggestions);
-
     // Submit button
     let button = document.createElement("button");
     button.innerText = "Suche";
@@ -213,18 +206,15 @@
     button.style.border = "0";
     button.style.borderRadius = "5px";
     inputContainer.appendChild(button);
-
     // Additional info text
     let text_unten = document.createElement("div");
     text_unten.innerHTML = "<p style='color: black; font-family: Arial; font-size: 12px; font-style: italic; margin-top: 8px; margin-bottom: 0'>Groß- und Kleinschreibung wird ignoriert</p>";
     modal.appendChild(text_unten);
-
     // -------------------------
     // Variables for suggestions
     // -------------------------
     let selectedSuggestionIndex = -1;
     let suppressInputEvent = false;
-
     function updateSuggestions() {
         if (suppressInputEvent) return;
         let query = input.value.toLowerCase();
@@ -254,7 +244,6 @@
             suggestions.style.display = "none";
         }
     }
-
     input.addEventListener("input", function(e) {
         if (!suppressInputEvent) {
             updateSuggestions();
@@ -264,7 +253,6 @@
         setTimeout(() => suggestions.style.display = "none", 200);
     });
     input.addEventListener("focus", updateSuggestions);
-
     input.addEventListener("keydown", function(event) {
         if (suggestions.style.display === "block") {
             let items = suggestions.getElementsByTagName("li");
@@ -319,7 +307,6 @@
             submitInput();
         }
     });
-
     // -------------------------
     // Submission: special mappings
     // -------------------------
@@ -364,7 +351,6 @@
             }
         }
     }
-
     button.onclick = submitInput;
     document.addEventListener("keydown", function(event) {
         if (event.key === "Escape") {
@@ -372,7 +358,6 @@
             document.body.style.cursor = "default";
         }
     });
-
     document.body.appendChild(modal);
     input.focus();
 })();``

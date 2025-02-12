@@ -5,7 +5,7 @@ javascript:(function(){
     const paragrafMappingsOriginal = {
         "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
         "MuSchG": "10002963", "PatVEG": "10002458", "PatV-EG": "10002458",
-        "PatAwg": "10002093", "PatAnwG": "10002093", "PAG": "20003819",
+        "PatAwG": "10002093", "PatAnwG": "10002093", "PAG": "20003819",
         "IO": "10001736", "EO": "10001700", "ZPO": "10001699", "ABGB": "10001622",
         "UGB": "10001702", "KSchG": "10002462", "KartG": "20004174",
         "UWG": "10002665", "JN": "10001697", "OGHG": "10000449", "ZustG": "10005522",
@@ -117,18 +117,20 @@ javascript:(function(){
     modal.style.textAlign = "center";
     modal.style.fontSize = "16px";
     modal.style.fontFamily = "Arial";
+    modal.style.hyphens = "auto";
 
     let p_title = document.createElement("p");
     p_title.style.fontSize = "16px";
     p_title.style.margin = "10px 0 10px 0";
     p_title.style.fontWeight = "bold";
-    p_title.style.color = "black";
+    p_title.style.color = "#333";
     p_title.textContent = "Gesetzestexte";
 
     let p_text = document.createElement("p");
     p_text.style.fontSize = "14px";
     p_text.style.margin = "0 0 10px 0";
-    p_text.style.color = "black";
+    p_text.style.color = "#333";
+    p_text.style.textAlign = "justify";
     p_text.textContent = "Bitte ein Gesetz (zB PatG, ZPO, EPÜ) oder einen konkreten Paragraphen/Artikel (zB 22a\u00A0PatG) eingeben:";
 
     modal.appendChild(p_title);
@@ -138,14 +140,14 @@ javascript:(function(){
     let closeButton = document.createElement("button");
     closeButton.textContent = "X";
     closeButton.style.position = "absolute";
-    closeButton.style.top = "5px";
-    closeButton.style.right = "5px";
-    closeButton.style.backgroundColor = "#EA0E00";
-    closeButton.style.color = "white";
+    closeButton.style.top = "3px";
+    closeButton.style.right = "3px";
+    closeButton.style.backgroundColor = "rgba(0, 0, 0, 0)";
+    closeButton.style.color = "#333";
     closeButton.style.border = "none";
     closeButton.style.borderRadius = "6px";
     closeButton.style.cursor = "pointer";
-    closeButton.style.width = "30px";
+    closeButton.style.width = "20px";
     closeButton.style.height = "20px";
     closeButton.style.fontSize = "12px";
     closeButton.style.lineHeight = "20px";
@@ -170,7 +172,7 @@ javascript:(function(){
     let input = document.createElement("input");
     input.type = "text";
     input.style.backgroundColor = "white";
-    input.style.color = "black";
+    input.style.color = "#333";
     input.style.padding = "5px";
     input.style.fontSize = "16px";
     input.style.width = "70%";
@@ -184,7 +186,7 @@ javascript:(function(){
     suggestions.style.listStyleType = "none";
     suggestions.style.textAlign = "left";
     suggestions.style.fontFamily = "Arial";
-    suggestions.style.color = "black";
+    suggestions.style.color = "#333";
     suggestions.style.lineHeight = "18px";
     suggestions.style.padding = "0";
     suggestions.style.margin = "5px 0 0 0";
@@ -215,13 +217,19 @@ javascript:(function(){
 
     // Additional info text
     let text_unten = document.createElement("p");
-    text_unten.style.color = "black";
+    text_unten.style.color = "#333";
     text_unten.style.fontFamily = "Arial";
     text_unten.style.fontSize = "12px";
     text_unten.style.fontStyle = "italic";
     text_unten.style.marginTop = "8px";
     text_unten.style.marginBottom = "0";
-    text_unten.textContent = "Groß- und Kleinschreibung wird ignoriert";
+    text_unten.innerHTML = "Groß- und Kleinschreibung wird ignoriert &ndash; ";
+    let github_link = document.createElement("a");
+    github_link.style.color = "#333";
+    github_link.style.textDecoration = "none";
+    github_link.href = "https://github.com/stephanhuebsch/bookmarks/";
+    github_link.innerText = "Quellcode";
+    text_unten.appendChild(github_link);
     modal.appendChild(text_unten);
 
     // -------------------------

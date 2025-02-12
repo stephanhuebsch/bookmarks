@@ -191,6 +191,7 @@ javascript:(function(){
     input.style.outline = "none";
     input.style.lineHeight = "20px";
     input.style.cursor = "auto";
+    input.style.height = "auto";
     inputContainer.appendChild(input);
 
     // Suggestions dropdown

@@ -147,6 +147,7 @@ javascript:(function(){
     // Close button
     let closeButton = document.createElement("button");
     closeButton.textContent = "X";
+    closeButton.classList.add("hoverRed");
     closeButton.style.position = "absolute";
     closeButton.style.top = "3px";
     closeButton.style.right = "3px";
@@ -243,6 +244,7 @@ javascript:(function(){
     text_unten.innerHTML = "Groß- und Kleinschreibung wird ignoriert &ndash; ";
     let github_link = document.createElement("a");
     github_link.style.color = "#333";
+    github_link.classList.add("hoverRed");    
     github_link.style.textDecoration = "none";
     github_link.style.lineHeight = "20px";
     github_link.href = "https://github.com/stephanhuebsch/bookmarks/";
@@ -407,6 +409,13 @@ javascript:(function(){
             document.body.style.cursor = "default";
         }
     });
+
+    const style = document.createElement("style");
+    style.textContent = `
+        .hoverRed:hover { color: #BC101D !important; }
+    `;
+    
+    document.head.appendChild(style);
 
     document.body.appendChild(modal);
     input.focus();

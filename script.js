@@ -247,6 +247,7 @@ javascript:(function(){
     github_link.classList.add("hoverRed");    
     github_link.style.textDecoration = "none";
     github_link.style.lineHeight = "20px";
+    github_link.style.fontWeight = "bold";
     github_link.href = "https://github.com/stephanhuebsch/bookmarks/";
     github_link.innerText = "Quellcode";
     text_unten.appendChild(github_link);

@@ -84,6 +84,10 @@ javascript:(function(){
         "dGMG (DE)": {
             noNumber: "https://www.gesetze-im-internet.de/gebrmg/BJNR201300936.html",
             withNumber: "https://www.gesetze-im-internet.de/gebrmg/__{num}.html"
+        },
+        "UMV": {
+            noNumber: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001",
+            withNumber: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001#art_{num}"
         }
     };
 
@@ -127,19 +131,22 @@ javascript:(function(){
     modal.style.fontSize = "16px";
     modal.style.fontFamily = "Arial";
     modal.style.hyphens = "auto";
+    modal.style.lineHeight = "20px";
 
     let p_title = document.createElement("p");
     p_title.style.fontSize = "16px";
-    p_title.style.margin = "10px 0 10px 0";
+    p_title.style.margin = "0 0 10px 0";
     p_title.style.fontWeight = "bold";
     p_title.style.color = "#333";
+    p_title.style.lineHeight = "20px";
     p_title.textContent = "Gesetzestexte";
 
     let p_text = document.createElement("p");
     p_text.style.fontSize = "14px";
     p_text.style.margin = "0 0 10px 0";
     p_text.style.color = "#333";
-    p_text.style.textAlign = "justify";
+    p_text.style.textAlign = "left";
+    p_text.style.lineHeight = "20px";
     p_text.textContent = "Bitte ein Gesetz (zB PatG, ZPO, EPÜ) oder einen konkreten Paragraphen/Artikel (zB 22a\u00A0PatG) eingeben:";
 
     modal.appendChild(p_title);
@@ -161,6 +168,7 @@ javascript:(function(){
     closeButton.style.fontSize = "12px";
     closeButton.style.lineHeight = "20px";
     closeButton.style.padding = "0";
+    closeButton.style.lineHeight = "20px";
     closeButton.onclick = function() {
         modal.remove();
         document.removeEventListener("keydown", escHandler);
@@ -175,6 +183,7 @@ javascript:(function(){
     inputContainer.style.width = "80%";
     inputContainer.style.marginLeft = "10%";
     inputContainer.style.marginRight = "10%";
+    inputContainer.style.lineHeight = "20px";
     modal.appendChild(inputContainer);
 
     // Input field
@@ -183,11 +192,14 @@ javascript:(function(){
     input.style.backgroundColor = "white";
     input.style.color = "#333";
     input.style.padding = "5px";
+    input.style.margin = "0";
     input.style.fontSize = "16px";
     input.style.width = "70%";
     input.style.border = "1px solid #888";
     input.style.borderRadius = "5px";
     input.style.outline = "none";
+    input.style.lineHeight = "20px";
+    input.style.cursor = "auto";
     inputContainer.appendChild(input);
 
     // Suggestions dropdown
@@ -196,7 +208,7 @@ javascript:(function(){
     suggestions.style.textAlign = "left";
     suggestions.style.fontFamily = "Arial";
     suggestions.style.color = "#333";
-    suggestions.style.lineHeight = "18px";
+    suggestions.style.lineHeight = "20px";
     suggestions.style.padding = "0";
     suggestions.style.margin = "5px 0 0 0";
     suggestions.style.maxHeight = "150px";
@@ -218,10 +230,13 @@ javascript:(function(){
     button.style.padding = "3px 8px";
     button.style.fontSize = "16px";
     button.style.cursor = "pointer";
-    button.style.backgroundColor = "#888";
-    button.style.color = "#F1F3F5";
+    button.style.backgroundColor = "#bbb";
+    button.style.color = "#333";
     button.style.border = "0";
+    button.style.borderBottom = "4px solid #999";
     button.style.borderRadius = "5px";
+    button.style.lineHeight = "20px";
+    button.style.fontWeight = "normal";
     inputContainer.appendChild(button);
 
     // Additional info text
@@ -232,10 +247,12 @@ javascript:(function(){
     text_unten.style.fontStyle = "italic";
     text_unten.style.marginTop = "8px";
     text_unten.style.marginBottom = "0";
+    text_unten.style.lineHeight = "20px";
     text_unten.innerHTML = "Groß- und Kleinschreibung wird ignoriert &ndash; ";
     let github_link = document.createElement("a");
     github_link.style.color = "#333";
     github_link.style.textDecoration = "none";
+    github_link.style.lineHeight = "20px";
     github_link.href = "https://github.com/stephanhuebsch/bookmarks/";
     github_link.innerText = "Quellcode";
     text_unten.appendChild(github_link);

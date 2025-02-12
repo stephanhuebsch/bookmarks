@@ -1,0 +1,383 @@
+javascript:(function(){
+    // -------------------------
+    // Define mapping objects
+    // -------------------------
+    const paragrafMappingsOriginal = {
+        "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
+        "MuSchG": "10002963", "PatVEG": "10002458", "PatV-EG": "10002458",
+        "PatAwg": "10002093", "PatAnwG": "10002093", "PAG": "20003819",
+        "IO": "10001736", "EO": "10001700", "ZPO": "10001699", "ABGB": "10001622",
+        "UGB": "10001702", "KSchG": "10002462", "KartG": "20004174",
+        "UWG": "10002665", "JN": "10001697", "OGHG": "10000449", "ZustG": "10005522",
+        "GOG": "10000009", "IEG": "10001735", "AußStrG": "10003047", "RpflG": "10002703",
+        "GmbHG": "10001720", "AktG": "10002070", "AVG": "10005768", "VwGG": "10000795",
+        "VfGG": "10000245", "DepotG": "10002142", "KMG": "20010729", "BWG": "10004827",
+        "WechselG": "10001934", "GebG": "10003882", "WettbG": "20001898",
+        "ASGG": "10000813", "GEO": "10000240", "IESG": "10008418", "URG": "10003479",
+        "Reo": "20011622", "AStG": "20009242"
+    };
+    const artikelMappingsOriginal = {
+        "PVÜ": "10002271", "BVG": "10000138", "B-VG": "10000138",
+        "EGJN": "10001696", "EGZPO": "10001698", "EGEO": "10001916"
+    };
+    // New special mappings – note: the keys here have no associated lookup number,
+    // but have a URL template for when a number is given ("withNumber")
+    // and a fixed URL when no number is provided ("noNumber").
+    const spezialMappingsOriginal = {
+        "EPÜ": {
+            noNumber: "https://www.epo.org/de/legal/epc/2020/convention.html",
+            withNumber: "https://www.epo.org/de/legal/epc/2020/a{num}.html"
+        },
+        "EPÜ AusfO": {
+            noNumber: "https://www.epo.org/de/legal/epc/2020/regulations.html",
+            withNumber: "https://www.epo.org/de/legal/epc/2020/r{num}.html"
+        },
+        "EPÜ GebO": {
+            noNumber: "https://www.epo.org/de/legal/epc/2020/rfees.html",
+            withNumber: "https://www.epo.org/de/legal/epc/2020/f{num}.html"
+        },
+        "PCT": {
+            noNumber: "https://www.wipo.int/pct/de/texts/articles/atoc.html",
+            withNumber: "https://www.wipo.int/pct/de/texts/articles/a{num}.html"
+        },
+        "PCT AusfO": {
+            noNumber: "https://www.wipo.int/pct/en/texts/rules/rtoc_short.html",
+            withNumber: "https://www.wipo.int/pct/en/texts/rules/r{num}.html"
+        },
+        "PCT VerwV": {
+            noNumber: "https://www.wipo.int/pct/en/texts/ai/ai_index.html",
+            withNumber: "https://www.wipo.int/pct/en/texts/ai/s{num}.html"
+        },
+        "EPGÜ": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
+        },
+        "UPCA": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
+        },
+        "DOEPS": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
+        },
+        "UPR": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
+        },
+        "GebOEPS": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upf.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upf_{num}.html"
+        },
+        "VO 1257/2012": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121257.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121257_{num}.html"
+        },
+        "VO 1260/2012": {
+            noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260.html",
+            withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
+        }
+    };
+
+    // Build lower-case lookup objects.
+    const paragrafMappings = {};
+    Object.keys(paragrafMappingsOriginal).forEach(key => {
+        paragrafMappings[key.toLowerCase()] = paragrafMappingsOriginal[key];
+    });
+    const artikelMappings = {};
+    Object.keys(artikelMappingsOriginal).forEach(key => {
+        artikelMappings[key.toLowerCase()] = artikelMappingsOriginal[key];
+    });
+    const spezialMappings = {};
+    Object.keys(spezialMappingsOriginal).forEach(key => {
+        spezialMappings[key.toLowerCase()] = spezialMappingsOriginal[key];
+    });
+
+    // Build a sorted list of all keys (original casing) for suggestions.
+    const alleGesetzeOriginal = [...Object.keys(paragrafMappingsOriginal),
+                                  ...Object.keys(artikelMappingsOriginal),
+                                  ...Object.keys(spezialMappingsOriginal)]
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+    // -------------------------
+    // Create modal elements
+    // -------------------------
+    let modal = document.createElement("div");
+    modal.style.position = "fixed";
+    modal.style.maxWidth = "350px";
+    modal.style.lineHeight = "18px";
+    modal.style.top = "50%";
+    modal.style.left = "50%";
+    modal.style.transform = "translate(-50%, -50%)";
+    modal.style.background = "#F1F3F5";
+    modal.style.padding = "20px";
+    modal.style.border = "1px solid #888";
+    modal.style.borderRadius = "10px";
+    modal.style.boxShadow = "rgba(0, 0, 0, 0.4) 6px 6px 12px";
+    modal.style.zIndex = "10000";
+    modal.style.textAlign = "center";
+    modal.style.fontSize = "16px";
+    modal.style.fontFamily = "Arial";
+
+    let p_title = document.createElement("p");
+    p_title.style.fontSize = "16px";
+    p_title.style.margin = "10px 0 10px 0";
+    p_title.style.fontWeight = "bold";
+    p_title.style.color = "black";
+    p_title.textContent = "Gesetzestexte";
+
+    let p_text = document.createElement("p");
+    p_text.style.fontSize = "14px";
+    p_text.style.margin = "0 0 10px 0";
+    p_text.style.color = "black";
+    p_text.textContent = "Bitte ein Gesetz (zB PatG, ZPO, EPÜ) oder einen konkreten Paragraphen/Artikel (zB 22a\u00A0PatG) eingeben:";
+
+    modal.appendChild(p_title);
+    modal.appendChild(p_text);
+
+    // Close button
+    let closeButton = document.createElement("button");
+    closeButton.textContent = "X";
+    closeButton.style.position = "absolute";
+    closeButton.style.top = "5px";
+    closeButton.style.right = "5px";
+    closeButton.style.backgroundColor = "#EA0E00";
+    closeButton.style.color = "white";
+    closeButton.style.border = "none";
+    closeButton.style.borderRadius = "6px";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.width = "30px";
+    closeButton.style.height = "20px";
+    closeButton.style.fontSize = "12px";
+    closeButton.style.lineHeight = "20px";
+    closeButton.style.padding = "0";
+    closeButton.onclick = function() {
+        modal.remove();
+        document.removeEventListener("keydown", escHandler);
+        document.body.style.cursor = "default";
+    };
+    modal.appendChild(closeButton);
+
+    // Input container
+    let inputContainer = document.createElement("div");
+    inputContainer.style.position = "relative";
+    inputContainer.style.display = "flex";
+    inputContainer.style.width = "80%";
+    inputContainer.style.marginLeft = "10%";
+    inputContainer.style.marginRight = "10%";
+    modal.appendChild(inputContainer);
+
+    // Input field
+    let input = document.createElement("input");
+    input.type = "text";
+    input.style.backgroundColor = "white";
+    input.style.color = "black";
+    input.style.padding = "5px";
+    input.style.fontSize = "16px";
+    input.style.width = "70%";
+    input.style.border = "1px solid #888";
+    input.style.borderRadius = "5px";
+    input.style.outline = "none";
+    inputContainer.appendChild(input);
+
+    // Suggestions dropdown
+    let suggestions = document.createElement("ul");
+    suggestions.style.listStyleType = "none";
+    suggestions.style.textAlign = "left";
+    suggestions.style.fontFamily = "Arial";
+    suggestions.style.color = "black";
+    suggestions.style.lineHeight = "18px";
+    suggestions.style.padding = "0";
+    suggestions.style.margin = "5px 0 0 0";
+    suggestions.style.maxHeight = "150px";
+    suggestions.style.overflowY = "auto";
+    suggestions.style.border = "1px solid #888";
+    suggestions.style.borderRadius = "5px";
+    suggestions.style.position = "absolute";
+    suggestions.style.top = "calc(100% - 6px)";
+    suggestions.style.left = "0";
+    suggestions.style.width = "calc(70% - 1px)";
+    suggestions.style.background = "white";
+    suggestions.style.display = "none";
+    inputContainer.appendChild(suggestions);
+
+    // Submit button
+    let button = document.createElement("button");
+    button.innerText = "Suche";
+    button.style.margin = "0 0 0 10px";
+    button.style.padding = "3px 8px";
+    button.style.fontSize = "16px";
+    button.style.cursor = "pointer";
+    button.style.backgroundColor = "#888";
+    button.style.color = "#F1F3F5";
+    button.style.border = "0";
+    button.style.borderRadius = "5px";
+    inputContainer.appendChild(button);
+
+    // Additional info text
+    let text_unten = document.createElement("p");
+    text_unten.style.color = "black";
+    text_unten.style.fontFamily = "Arial";
+    text_unten.style.fontSize = "12px";
+    text_unten.style.fontStyle = "italic";
+    text_unten.style.marginTop = "8px";
+    text_unten.style.marginBottom = "0";
+    text_unten.textContent = "Groß- und Kleinschreibung wird ignoriert";
+    modal.appendChild(text_unten);
+
+    // -------------------------
+    // Variables for suggestions
+    // -------------------------
+    let selectedSuggestionIndex = -1;
+    let suppressInputEvent = false;
+
+    function updateSuggestions() {
+        if (suppressInputEvent) return;
+        let query = input.value.toLowerCase();
+        suggestions.innerHTML = "";
+        selectedSuggestionIndex = -1;
+        let match = query.match(/^(?:(\d+[a-zA-Z]?\s+))?(.*)$/);
+        let prefix = match[1] || "";
+        let searchTerm = match[2] || "";
+        let matches = alleGesetzeOriginal.filter(gesetz =>
+            gesetz.toLowerCase().includes(searchTerm)
+        );
+        if (matches.length > 0 && searchTerm.length > 0) {
+            suggestions.style.display = "block";
+            matches.forEach(gesetz => {
+                let item = document.createElement("li");
+                item.style.padding = "5px";
+                item.style.cursor = "pointer";
+                item.style.borderBottom = "1px solid lightgray";
+                item.textContent = prefix + gesetz;
+                item.onclick = function() {
+                    input.value = prefix + gesetz;
+                    suggestions.style.display = "none";
+                };
+                suggestions.appendChild(item);
+            });
+        } else {
+            suggestions.style.display = "none";
+        }
+    }
+
+    input.addEventListener("input", function(e) {
+        if (!suppressInputEvent) {
+            updateSuggestions();
+        }
+    });
+    input.addEventListener("blur", function() {
+        setTimeout(() => suggestions.style.display = "none", 200);
+    });
+    input.addEventListener("focus", updateSuggestions);
+
+    input.addEventListener("keydown", function(event) {
+        if (suggestions.style.display === "block") {
+            let items = suggestions.getElementsByTagName("li");
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (selectedSuggestionIndex < items.length - 1) {
+                    selectedSuggestionIndex++;
+                } else {
+                    selectedSuggestionIndex = 0;
+                }
+                for (let i = 0; i < items.length; i++) {
+                    items[i].style.backgroundColor = (i === selectedSuggestionIndex) ? "#ddd" : "";
+                }
+                if (items[selectedSuggestionIndex]) {
+                    suppressInputEvent = true;
+                    input.value = items[selectedSuggestionIndex].textContent;
+                    setTimeout(() => { suppressInputEvent = false; }, 0);
+                    items[selectedSuggestionIndex].scrollIntoView({ block: "nearest" });
+                }
+                return;
+            } else if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (selectedSuggestionIndex > 0) {
+                    selectedSuggestionIndex--;
+                } else {
+                    selectedSuggestionIndex = items.length - 1;
+                }
+                for (let i = 0; i < items.length; i++) {
+                    items[i].style.backgroundColor = (i === selectedSuggestionIndex) ? "#ddd" : "";
+                }
+                if (items[selectedSuggestionIndex]) {
+                    suppressInputEvent = true;
+                    input.value = items[selectedSuggestionIndex].textContent;
+                    setTimeout(() => { suppressInputEvent = false; }, 0);
+                    items[selectedSuggestionIndex].scrollIntoView({ block: "nearest" });
+                }
+                return;
+            } else if (event.key === "Enter") {
+                if (selectedSuggestionIndex >= 0) {
+                    event.preventDefault();
+                    let selectedItem = items[selectedSuggestionIndex];
+                    if (selectedItem) {
+                        input.value = selectedItem.textContent;
+                        suggestions.style.display = "none";
+                        submitInput();
+                    }
+                    return;
+                }
+            }
+        }
+        if (event.key === "Enter") {
+            submitInput();
+        }
+    });
+
+    // -------------------------
+    // Submission: special mappings
+    // -------------------------
+    function submitInput() {
+        document.body.style.cursor = "progress";
+        let trimmed = input.value.trim().toLowerCase();
+        // First, check if the input starts with a number followed by some text.
+        let match = trimmed.match(/^(\d+[a-z]?)\s+(.+)$/);
+        if (match) {
+            let number = match[1];
+            let lawKey = match[2].trim().toLowerCase();
+            // Check for special mapping first.
+            if(spezialMappings.hasOwnProperty(lawKey)) {
+                // Replace {num} with the number.
+                let urlTemplate = spezialMappings[lawKey].withNumber;
+                let finalUrl = urlTemplate.replace("{num}", number);
+                window.location.href = finalUrl;
+                return;
+            }
+            // Fall back to normal mappings.
+            if (paragrafMappings[lawKey]) {
+                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[lawKey])}&Artikel=&Paragraf=${encodeURIComponent(number)}`;
+            } else if (artikelMappings[lawKey]) {
+                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[lawKey])}&Artikel=${encodeURIComponent(number)}&Paragraf=`;
+            } else {
+                console.log("Ungültige Eingabe.");
+                document.body.style.cursor = "default";
+            }
+        } else {
+            // No number provided.
+            if(spezialMappings.hasOwnProperty(trimmed)) {
+                window.location.href = spezialMappings[trimmed].noNumber;
+                return;
+            }
+            if (paragrafMappings[trimmed]) {
+                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[trimmed])}`;
+            } else if (artikelMappings[trimmed]) {
+                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[trimmed])}`;
+            } else {
+                console.log("Ungültige Eingabe.");
+                document.body.style.cursor = "default";
+            }
+        }
+    }
+
+    button.onclick = submitInput;
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            modal.remove();
+            document.body.style.cursor = "default";
+        }
+    });
+
+    document.body.appendChild(modal);
+    input.focus();
+})();

@@ -14,7 +14,7 @@
 ``javascript:(function(){const paragrafMappings={"patg":"10002181","gmg":"10003230","mschg":"10002180","muschg":"10002963","patveg":"10002458","patv-eg":"10002458","patawg":"10002093","patanwg":"10002093","pag":"20003819","io":"10001736","eo":"10001700","zpo":"10001699","abgb":"10001622","ugb":"10001702","kschg":"10002462","kartg":"20004174","uwg":"10002665","jn":"10001697","oghg":"10000449","zustg":"10005522","gog":"10000009","ieg":"10001735","außtrg":"20003047","rpflg":"10002703","gmbhg":"10001720","aktg":"10002070","avg":"10005768","vwgg":"10000795","vfgg":"10000245","depotg":"10002142","kmg":"20010729","bwg":"10004827","wechselg":"10001934","gebg":"10003882","wettbg":"20001898","asgg":"10000813","geo":"10000240","iesg":"10008418","urg":"10003479","reo":"20011622","astg":"20009242"};const artikelMappings={"pvü":"10002271","bvg":"10000138","b-vg":"10000138","egjn":"10001696","egzpo":"10001698","egeo":"10001916"};let input=prompt("Bitte Eingabe eingeben (z.B. patg oder '22a patg'):");if(input){let trimmed=input.trim().toLowerCase();let match=trimmed.match(/^(\d+[a-z]?)\s+(.+)$/);if(match){let number=match[1];let lawKey=match[2].trim();if(paragrafMappings[lawKey]){window.location.href=`https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[lawKey])}&Artikel=&Paragraf=${encodeURIComponent(number)}`}else if(artikelMappings[lawKey]){window.location.href=`https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[lawKey])}&Artikel=${encodeURIComponent(number)}&Paragraf=`}else{alert("Ungültige Gesetzeskennung. Bitte versuche es erneut.")}}else{if(paragrafMappings[trimmed]){window.location.href=`https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappings[trimmed])}`}else if(artikelMappings[trimmed]){window.location.href=`https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappings[trimmed])}`}else{alert("Ungültige Eingabe. Bitte versuche es erneut.")}}}else{alert("Eingabe wurde abgebrochen.")}})();``
 
 ## Alle
-``javascript:(function(){
+javascript:(function(){
     // -------------------------
     // Define mapping objects
     // -------------------------
@@ -93,6 +93,7 @@
             withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
         }
     };
+
     // Build lower-case lookup objects.
     const paragrafMappings = {};
     Object.keys(paragrafMappingsOriginal).forEach(key => {
@@ -112,6 +113,7 @@
                                   ...Object.keys(artikelMappingsOriginal),
                                   ...Object.keys(spezialMappingsOriginal)]
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
     // -------------------------
     // Create modal elements
     // -------------------------
@@ -132,6 +134,7 @@
     modal.style.fontSize = "16px";
     modal.style.fontFamily = "Arial";
     modal.innerHTML = "<p style='font-size: 16px; margin-bottom: 10px; margin-top: 0; font-weight: bold; color: black'>Gesetzestexte</p><p style='font-size: 14px; margin-bottom: 10px; color: black'>Bitte ein Gesetz (zB PatG, ZPO, EPÜ) oder einen konkreten Paragraphen/Artikel (zB 22a&nbsp;PatG) eingeben:</p>";
+
     // Close button
     let closeButton = document.createElement("button");
     closeButton.textContent = "X";
@@ -154,6 +157,7 @@
         document.body.style.cursor = "default";
     };
     modal.appendChild(closeButton);
+
     // Input container
     let inputContainer = document.createElement("div");
     inputContainer.style.position = "relative";
@@ -162,6 +166,7 @@
     inputContainer.style.marginLeft = "10%";
     inputContainer.style.marginRight = "10%";
     modal.appendChild(inputContainer);
+
     // Input field
     let input = document.createElement("input");
     input.type = "text";
@@ -174,6 +179,7 @@
     input.style.borderRadius = "5px";
     input.style.outline = "none";
     inputContainer.appendChild(input);
+
     // Suggestions dropdown
     let suggestions = document.createElement("ul");
     suggestions.style.listStyleType = "none";
@@ -194,6 +200,7 @@
     suggestions.style.background = "white";
     suggestions.style.display = "none";
     inputContainer.appendChild(suggestions);
+
     // Submit button
     let button = document.createElement("button");
     button.innerText = "Suche";
@@ -206,15 +213,18 @@
     button.style.border = "0";
     button.style.borderRadius = "5px";
     inputContainer.appendChild(button);
+
     // Additional info text
     let text_unten = document.createElement("div");
     text_unten.innerHTML = "<p style='color: black; font-family: Arial; font-size: 12px; font-style: italic; margin-top: 8px; margin-bottom: 0'>Groß- und Kleinschreibung wird ignoriert</p>";
     modal.appendChild(text_unten);
+
     // -------------------------
     // Variables for suggestions
     // -------------------------
     let selectedSuggestionIndex = -1;
     let suppressInputEvent = false;
+
     function updateSuggestions() {
         if (suppressInputEvent) return;
         let query = input.value.toLowerCase();
@@ -244,6 +254,7 @@
             suggestions.style.display = "none";
         }
     }
+
     input.addEventListener("input", function(e) {
         if (!suppressInputEvent) {
             updateSuggestions();
@@ -253,6 +264,7 @@
         setTimeout(() => suggestions.style.display = "none", 200);
     });
     input.addEventListener("focus", updateSuggestions);
+
     input.addEventListener("keydown", function(event) {
         if (suggestions.style.display === "block") {
             let items = suggestions.getElementsByTagName("li");
@@ -307,6 +319,7 @@
             submitInput();
         }
     });
+
     // -------------------------
     // Submission: special mappings
     // -------------------------
@@ -351,6 +364,7 @@
             }
         }
     }
+
     button.onclick = submitInput;
     document.addEventListener("keydown", function(event) {
         if (event.key === "Escape") {
@@ -358,6 +372,7 @@
             document.body.style.cursor = "default";
         }
     });
+
     document.body.appendChild(modal);
     input.focus();
-})();``
+})();

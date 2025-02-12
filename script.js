@@ -14,7 +14,8 @@ javascript:(function(){
         "VfGG": "10000245", "DepotG": "10002142", "KMG": "20010729", "BWG": "10004827",
         "WechselG": "10001934", "GebG": "10003882", "WettbG": "20001898",
         "ASGG": "10000813", "GEO": "10000240", "IESG": "10008418", "URG": "10003479",
-        "Reo": "20011622", "AStG": "20009242"
+        "Reo": "20011622", "AStG": "20009242", "SchZG": "10003470", "HlSchG": "10002876",
+        "SortSchG": "20001503", "PPG": "20010791", "UrhG": "10001848"
     };
     const artikelMappingsOriginal = {
         "PVÜ": "10002271", "BVG": "10000138", "B-VG": "10000138",
@@ -75,6 +76,14 @@ javascript:(function(){
         "VO 1260/2012": {
             noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260.html",
             withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
+        },
+        "dPatG (DE)": {
+            noNumber: "https://www.gesetze-im-internet.de/patg/BJNR201170936.html",
+            withNumber: "https://www.gesetze-im-internet.de/patg/__{num}.html"
+        },
+        "dGMG (DE)": {
+            noNumber: "https://www.gesetze-im-internet.de/gebrmg/BJNR201300936.html",
+            withNumber: "https://www.gesetze-im-internet.de/gebrmg/__{num}.html"
         }
     };
 

@@ -4,10 +4,8 @@ javascript:(function(){
     // -------------------------
     const paragrafMappingsOriginal = {
         "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
-        "MuSchG": "10002963",
-        // Only include the correct one with hyphen.
-        "PatV-EG": "10002458",
-        "PatAwG": "10002093", "PatAnwG": "10002093", "PAG": "20003819",
+        "MuSchG": "10002963", "PatV-EG": "10002458",
+        "PatAwG": "10002093", "PAG": "20003819",
         "IO": "10001736", "EO": "10001700", "ZPO": "10001699", "ABGB": "10001622",
         "UGB": "10001702", "KSchG": "10002462", "KartG": "20004174",
         "UWG": "10002665", "JN": "10001697", "OGHG": "10000449", "ZustG": "10005522",
@@ -20,7 +18,7 @@ javascript:(function(){
         "SortSchG": "20001503", "PPG": "20010791", "UrhG": "10001848"
     };
     const artikelMappingsOriginal = {
-        "PVÜ": "10002271", "BVG": "10000138", "B-VG": "10000138",
+        "PVÜ": "10002271", "B-VG": "10000138",
         "EGJN": "10001696", "EGZPO": "10001698", "EGEO": "10001916"
     };
     const spezialMappingsOriginal = {
@@ -75,14 +73,6 @@ javascript:(function(){
         "VO 1260/2012": {
             noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260.html",
             withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
-        },
-        "dPatG (DE)": {
-            noNumber: "https://www.gesetze-im-internet.de/patg/BJNR201170936.html",
-            withNumber: "https://www.gesetze-im-internet.de/patg/__{num}.html"
-        },
-        "dGMG (DE)": {
-            noNumber: "https://www.gesetze-im-internet.de/gebrmg/BJNR201300936.html",
-            withNumber: "https://www.gesetze-im-internet.de/gebrmg/__{num}.html"
         },
         "UMV": {
             noNumber: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001",

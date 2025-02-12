@@ -15,7 +15,7 @@ javascript:(function(){
         "WechselG": "10001934", "GebG": "10003882", "WettbG": "20001898",
         "ASGG": "10000813", "GEO": "10000240", "IESG": "10008418", "URG": "10003479",
         "Reo": "20011622", "AStG": "20009242", "SchZG": "10003470", "HlSchG": "10002876",
-        "SortSchG": "20001503", "PPG": "20010791", "UrhG": "10001848"
+        "SortSchG": "20001503", "PPG": "20010791", "UrhG": "10001848", "FlexKapGG": "20012473"
     };
     const artikelMappingsOriginal = {
         "PVÜ": "10002271", "B-VG": "10000138",

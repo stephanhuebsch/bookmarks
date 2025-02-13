@@ -162,6 +162,7 @@ javascript:(function(){
     closeButton.style.lineHeight = "20px";
     closeButton.style.padding = "0";
     closeButton.style.boxShadow = "none";
+    closeButton.style.textShadow = "none";
     closeButton.onclick = function() {
         modal.remove();
         document.removeEventListener("keydown", escHandler);
@@ -240,6 +241,7 @@ javascript:(function(){
     button.style.webkitBoxSizing = "content-box";
     button.style.boxSizing = "content-box";
     button.style.height = "auto";
+    button.style.textShadow = "none";
     inputContainer.appendChild(button);
 
     // Additional info text

@@ -183,6 +183,7 @@ javascript:(function(){
     input.type = "text";
     input.style.backgroundColor = "white";
     input.style.color = "#333";
+    input.style.fontFamily = "Arial";
     input.style.padding = "5px";
     input.style.margin = "0";
     input.style.fontSize = "16px";

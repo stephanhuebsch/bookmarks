@@ -213,6 +213,7 @@ javascript:(function(){
     suggestions.style.left = "0";
     suggestions.style.width = "calc(70% - 1px)";
     suggestions.style.background = "white";
+    suggestions.style.fontWeight = "normal";
     suggestions.style.display = "none";
     inputContainer.appendChild(suggestions);
 

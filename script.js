@@ -161,6 +161,7 @@ javascript:(function(){
     closeButton.style.fontSize = "12px";
     closeButton.style.lineHeight = "20px";
     closeButton.style.padding = "0";
+    closeButton.style.boxShadow = "none";
     closeButton.onclick = function() {
         modal.remove();
         document.removeEventListener("keydown", escHandler);
@@ -194,6 +195,8 @@ javascript:(function(){
     input.style.lineHeight = "20px";
     input.style.cursor = "auto";
     input.style.height = "auto";
+    input.style.boxShadow = "none";
+    input.style.boxSizing = "border-box";
     inputContainer.appendChild(input);
 
     // Suggestions dropdown
@@ -232,6 +235,11 @@ javascript:(function(){
     button.style.borderRadius = "5px";
     button.style.lineHeight = "20px";
     button.style.fontWeight = "normal";
+    button.style.textTransform = "none";
+    button.style.boxShadow = "none";
+    button.style.webkitBoxSizing = "content-box";
+    button.style.boxSizing = "content-box";
+    button.style.height = "auto";
     inputContainer.appendChild(button);
 
     // Additional info text
@@ -250,6 +258,7 @@ javascript:(function(){
     github_link.style.textDecoration = "none";
     github_link.style.lineHeight = "20px";
     github_link.style.fontWeight = "bold";
+    github_link.style.border = "none";
     github_link.href = "https://github.com/stephanhuebsch/bookmarks/";
     github_link.innerText = "Quellcode";
     text_unten.appendChild(github_link);

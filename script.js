@@ -1,7 +1,34 @@
 javascript:(function(){
-    // -------------------------
-    // Define mapping objects
-    // -------------------------
+	// -------------------------
+	// Define mapping objects
+	// ------------------------
+	const mappingsOriginal = {
+		"PatG": {
+		"vollerName": "Patentgesetz",
+        "gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181",
+        "einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181&Paragraf={num}"
+		},
+	"GMG": {
+		"vollerName": "Gebrauchsmustergesetz",
+		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230",
+		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230&Paragraf={num}"
+		},
+	"PatV-EG": {
+		"vollerName": "Patentverträge-Einführungsgesetz",
+		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458",
+		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458&Paragraf={num}"
+		},
+	"PatAnwG": {
+		"vollerName": "Patentanwaltsgesetz",
+		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093",
+		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093&Paragraf={num}"
+		},
+	"PAG": {
+		"vollerName": "Patentamtsgebührengesetz",
+		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819",
+		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819&Paragraf={num}"
+		}
+    };
     const paragrafMappingsOriginal = {
         "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
         "MuSchG": "10002963", "PatV-EG": "10002458",
@@ -94,6 +121,7 @@ javascript:(function(){
     const paragrafMappingsNorm = buildNormalizedMapping(paragrafMappingsOriginal);
     const artikelMappingsNorm  = buildNormalizedMapping(artikelMappingsOriginal);
     const spezialMappingsNorm  = buildNormalizedMapping(spezialMappingsOriginal);
+	const mappingsNorm = buildNormalizedMapping(mappingsOriginal);
 
     // -------------------------
     // Build lower-case lookup objects for suggestions (keep original casing for display)
@@ -102,6 +130,7 @@ javascript:(function(){
                                   ...Object.keys(artikelMappingsOriginal),
                                   ...Object.keys(spezialMappingsOriginal)]
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    const alleGesetze = [...Object.keys(mappingsOriginal)].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
     // -------------------------
     // Create modal elements
@@ -384,50 +413,40 @@ javascript:(function(){
             let number = match[1];
             // Normalize the law key by removing hyphens.
             let lawKey = match[2].trim().toLowerCase().replace(/-/g, '');
-            // Check for special mapping first.
-            if(spezialMappingsNorm.hasOwnProperty(lawKey)) {
-                let urlTemplate = spezialMappingsNorm[lawKey].withNumber;
+            
+            // Check for mapping
+            if(mappingsNorm.hasOwnProperty(lawKey)) {
+                let urlTemplate = mappingsNorm[lawKey].einzelneNorm;
                 let finalUrl = urlTemplate.replace("{num}", number);
                 window.location.href = finalUrl;
                 return;
-            }
-            // Fall back to normal mappings.
-            if (paragrafMappingsNorm[lawKey]) {
-                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappingsNorm[lawKey])}&Artikel=&Paragraf=${encodeURIComponent(number)}`;
-            } else if (artikelMappingsNorm[lawKey]) {
-                window.location.href = `https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappingsNorm[lawKey])}&Artikel=${encodeURIComponent(number)}&Paragraf=`;
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
                 input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
-		input.style.border = "1px solid #BC101D";
-		input.style.backgroundColor = "#f1cfd1";
-		setTimeout(() => {
-			input.style.border = "1px solid #888";
-			input.style.backgroundColor = "white";
-		}, 1000);
+								input.style.border = "1px solid #BC101D";
+								input.style.backgroundColor = "#f1cfd1";
+								setTimeout(() => {
+									input.style.border = "1px solid #888";
+									input.style.backgroundColor = "white";
+								}, 1000);
             }
         } else {
             // No number provided.
             let normalizedInput = trimmed.replace(/-/g, '');
-            if(spezialMappingsNorm.hasOwnProperty(normalizedInput)) {
-                window.location.href = spezialMappingsNorm[normalizedInput].noNumber;
+            if(mappingsNorm.hasOwnProperty(normalizedInput)) {
+                window.location.href = mappingsNorm[normalizedInput].gesamterText;
                 return;
-            }
-            if (paragrafMappingsNorm[normalizedInput]) {
-                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(paragrafMappingsNorm[normalizedInput])}`;
-            } else if (artikelMappingsNorm[normalizedInput]) {
-                window.location.href = `https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=${encodeURIComponent(artikelMappingsNorm[normalizedInput])}`;
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
                 input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
-		input.style.border = "1px solid #BC101D";
-		input.style.backgroundColor = "#f1cfd1";
-		setTimeout(() => {
-			input.style.border = "1px solid #888";
-			input.style.backgroundColor = "white";
-		}, 1000);
+								input.style.border = "1px solid #BC101D";
+								input.style.backgroundColor = "#f1cfd1";
+								setTimeout(() => {
+									input.style.border = "1px solid #888";
+									input.style.backgroundColor = "white";
+								}, 1000);
             }
         }
     }

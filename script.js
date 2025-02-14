@@ -303,38 +303,55 @@ javascript:(function(){
     let selectedSuggestionIndex = -1;
     let suppressInputEvent = false;
 
-    function updateSuggestions() {
-        if (suppressInputEvent) return;
-        let query = input.value.toLowerCase();
-        suggestions.innerHTML = "";
-        selectedSuggestionIndex = -1;
-        let match = query.match(/^(?:(\d+[a-zA-Z]?\s+))?(.*)$/);
-        let prefix = match[1] || "";
-        let searchTerm = match[2] || "";
-        // Remove hyphens for matching purposes.
-        let sanitizedSearchTerm = searchTerm.replace(/-/g, '');
-        let matches = alleGesetze.filter(gesetz => {
-            let sanitizedGesetz = gesetz.toLowerCase().replace(/-/g, '');
-            return sanitizedGesetz.includes(sanitizedSearchTerm);
+function updateSuggestions() {
+    if (suppressInputEvent) return;
+    let query = input.value.toLowerCase();
+    suggestions.innerHTML = "";
+    selectedSuggestionIndex = -1;
+
+    let match = query.match(/^(?:(\d+[a-zA-Z]?\s+))?(.*)$/);
+    let prefix = match[1] || "";
+    let searchTerm = match[2] || "";
+    
+    // Remove hyphens for matching purposes.
+    let sanitizedSearchTerm = searchTerm.replace(/-/g, '');
+
+    // Find matches based on abbreviation (default behavior)
+    let matches = alleGesetze.filter(gesetz => {
+        let sanitizedGesetz = gesetz.toLowerCase().replace(/-/g, '');
+        return sanitizedGesetz.includes(sanitizedSearchTerm);
+    });
+
+    // If no matches were found, check full names
+    if (matches.length === 0) {
+        Object.keys(mappingsOriginal).forEach(abbreviation => {
+            let fullLawName = mappingsOriginal[abbreviation].vollerName.toLowerCase().replace(/-/g, '');
+            if (fullLawName.includes(sanitizedSearchTerm)) {
+                matches.push(abbreviation); // Add the abbreviation (not the full name) to the dropdown
+            }
         });
-        if (matches.length > 0 && searchTerm.length > 0) {
-            suggestions.style.display = "block";
-            matches.forEach(gesetz => {
-                let item = document.createElement("li");
-                item.style.padding = "5px";
-                item.style.cursor = "pointer";
-                item.style.borderBottom = "1px solid lightgray";
-                item.textContent = prefix + gesetz;
-                item.onclick = function() {
-                    input.value = prefix + gesetz;
-                    suggestions.style.display = "none";
-                };
-                suggestions.appendChild(item);
-            });
-        } else {
-            suggestions.style.display = "none";
-        }
     }
+
+    // Display results
+    if (matches.length > 0 && searchTerm.length > 0) {
+        suggestions.style.display = "block";
+        matches.forEach(gesetz => {
+            let item = document.createElement("li");
+            item.style.padding = "5px";
+            item.style.cursor = "pointer";
+            item.style.borderBottom = "1px solid lightgray";
+            item.textContent = prefix + gesetz; // Keep only abbreviation in the dropdown
+            item.onclick = function() {
+                input.value = prefix + gesetz;
+                suggestions.style.display = "none";
+            };
+            suggestions.appendChild(item);
+        });
+    } else {
+        suggestions.style.display = "none";
+    }
+}
+
 
     input.addEventListener("input", function(e) {
         if (!suppressInputEvent) {

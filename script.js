@@ -1,111 +1,341 @@
 javascript:(function(){
-	// -------------------------
+	// ------------------------
 	// Define mapping objects
 	// ------------------------
 	const mappingsOriginal = {
-		"PatG": {
-		"vollerName": "Patentgesetz",
-		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181",
-		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181&Paragraf={num}"
+	// ------------------------
+	// Österreich: IP
+	// ------------------------
+	"PatG": {
+		vollerName: "Patentgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181&Paragraf={num}"
 		},
 	"GMG": {
-		"vollerName": "Gebrauchsmustergesetz",
-		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230",
-		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230&Paragraf={num}"
+		vollerName: "Gebrauchsmustergesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003230&Paragraf={num}"
 		},
 	"PatV-EG": {
-		"vollerName": "Patentverträge-Einführungsgesetz",
-		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458",
-		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458&Paragraf={num}"
+		vollerName: "Patentverträge-Einführungsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002458&Paragraf={num}"
 		},
 	"PatAnwG": {
-		"vollerName": "Patentanwaltsgesetz",
-		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093",
-		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093&Paragraf={num}"
+		vollerName: "Patentanwaltsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002093&Paragraf={num}"
 		},
 	"PAG": {
-		"vollerName": "Patentamtsgebührengesetz",
-		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819",
-		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819&Paragraf={num}"
+		vollerName: "Patentamtsgebührengesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003819&Paragraf={num}"
+		},
+	"MSchG": {
+		vollerName: "Markenschutzgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002180",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002180&Paragraf={num}"
+		},
+	"MuSchG": {
+		vollerName: "Musterschutzgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002963",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002963&Paragraf={num}"
+		},
+	"SchZG": {
+		vollerName: "Schutzzertifikatsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003470",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003470&Paragraf={num}"
+		},
+	"SortSchG": {
+		vollerName: "Sortenschutzgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001503",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001503&Paragraf={num}"
+		},
+	"HlSchG": {
+		vollerName: "Halbleiterschutzgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002876",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002876&Paragraf={num}"
+		},
+	"UWG": {
+		vollerName: "Gesetz gegen den unlauteren Wettbewerb",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002665",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002665&Paragraf={num}"
+		},
+	"UrhG": {
+		vollerName: "Urheberrechtsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001848",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001848&Paragraf={num}"
+		},
+	// ------------------------
+	// Österreich: allgemein
+	// ------------------------
+	"ABGB": {
+		vollerName: "Allgemeines bürgerliches Gesetzbuch",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001622",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001622&Paragraf={num}"
+		},
+	"AktG": {
+		vollerName: "Aktiengesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002070",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002070&Paragraf={num}"
+		},
+	"ASGG": {
+		vollerName: "Arbeits- und Sozialgerichtsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000813",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000813&Paragraf={num}"
+		},
+	"AStG": {
+		vollerName: "Alternative-Streitbeilegung-Gesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20009242",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20009242&Paragraf={num}"
+		},
+	"AußStrG": {
+		vollerName: "Außerstreitgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003047",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20003047&Paragraf={num}"
+		},
+	"AVG": {
+		vollerName: "Allgemeines Verwaltungsverfahrensgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10005768",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10005768&Paragraf={num}"
+		},
+	"B-VG": {
+		vollerName: "Bundes-Verfassungsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000138",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000138&Artikel={num}"
+		},
+	"BWG": {
+		vollerName: "Bankwesengesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004827",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004827&Paragraf={num}"
+		},
+	"DepotG": {
+		vollerName: "Depotgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002142",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002142&Paragraf={num}"
+		},
+	"EGEO": {
+		vollerName: "Einführungsgesetz zur Exekutionsordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001916",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001916&Artikel={num}"
+		},
+	"EGJN": {
+		vollerName: "Einführungsgesetz zur Jurisdiktionsnorm",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001696",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001696&Artikel={num}"
+		},
+	"EGZPO": {
+		vollerName: "Einführungsgesetz zur Zivilprozessordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001698",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001698&Artikel={num}"
+		},
+	"EO": {
+		vollerName: "Exekutionsordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001700",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001700&Paragraf={num}"
+		},
+	"FlexKapGG": {
+		vollerName: "Flexible-Kapitalgesellschafts-Gesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20012473",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20012473&Paragraf={num}"
+		},
+	"GebG": {
+		vollerName: "Gebührengesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003882",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003882&Paragraf={num}"
+		},
+	"GEO": {
+		vollerName: "Geschäftsordnung für die Gerichte I. und II. Instanz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000240",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000240&Paragraf={num}"
+		},
+	"GmbHG": {
+		vollerName: "GmbH-Gesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001720",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001720&Paragraf={num}"
+		},
+	"GOG": {
+		vollerName: "Gerichtsorganisationsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000009",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000009&Paragraf={num}"
+		},
+	"IEG": {
+		vollerName: "Insolvenzrechtseinführungsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001735",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001735&Paragraf={num}"
+		},
+	"IESG": {
+		vollerName: "Insolvenz-Entgeltsicherungsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008418",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008418&Paragraf={num}"
+		},
+	"IO": {
+		vollerName: "Insolvenzordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001736",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001736&Paragraf={num}"
+		},
+	"JN": {
+		vollerName: "Jurisdiktionsnorm",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001697",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001697&Paragraf={num}"
+		},
+	"KartG": {
+		vollerName: "Kartellgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20004174",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20004174&Paragraf={num}"
+		},
+	"KMG": {
+		vollerName: "Kapitalmarktgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20010729",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20010729&Paragraf={num}"
+		},
+	"KSchG": {
+		vollerName: "Konsumentenschutzgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002462",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002462&Paragraf={num}"
+		},
+	"OGHG": {
+		vollerName: "Bundesgesetz über den Obersten Gerichtshof",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000449",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000449&Paragraf={num}"
+		},
+	"PPG": {
+		vollerName: "Produktpirateriegesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20010791",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20010791&Paragraf={num}"
+		},
+	"Reo": {
+		vollerName: "Restrukturierungsordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20011622",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20011622&Paragraf={num}"
+		},
+	"RpflG": {
+		vollerName: "Rechtspflegergesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002703",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002703&Paragraf={num}"
+		},
+	"UGB": {
+		vollerName: "Unternehmergesetzbuch",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001702",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001702&Paragraf={num}"
+		},
+	"URG": {
+		vollerName: "Unternehmensreorganisationsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003479",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003479&Paragraf={num}"
+		},
+	"VfGG": {
+		vollerName: "Verfassungsgerichtshofgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000245",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000245&Paragraf={num}"
+		},
+	"VwGG": {
+		vollerName: "Verwaltungsgerichtshofgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000795",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10000795&Paragraf={num}"
+		},
+	"WechselG": {
+		vollerName: "Wechselgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001934",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001934&Artikel={num}"
+		},
+	"WettbG": {
+		vollerName: "Wettbewerbsgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001898",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001898&Paragraf={num}"
+		},
+	"ZPO": {
+		vollerName: "Zivilprozessordnung",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001699",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001699&Paragraf={num}"
+		},
+	"ZustG": {
+		vollerName: "Zustellgesetz",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10005522",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10005522&Paragraf={num}"
+		},
+	// ------------------------
+	// Europa
+	// ------------------------
+	"EPÜ": {
+		vollerName: "Europäisches Patentübereinkommen",
+		gesamterText: "https://www.epo.org/de/legal/epc/2020/convention.html",
+		einzelneNorm: "https://www.epo.org/de/legal/epc/2020/a{num}.html"
+	},
+	"EPÜ AusfO": {
+		vollerName: "Europäisches Patentübereinkommen Ausführungsordnung",
+		gesamterText: "https://www.epo.org/de/legal/epc/2020/regulations.html",
+		einzelneNorm: "https://www.epo.org/de/legal/epc/2020/r{num}.html"
+	},
+	"EPÜ GebO": {
+		vollerName: "Europäisches Patentübereinkommen Gebührenordnung",
+		gesamterText: "https://www.epo.org/de/legal/epc/2020/rfees.html",
+		einzelneNorm: "https://www.epo.org/de/legal/epc/2020/f{num}.html"
+        },
+	"EPGÜ": {
+		vollerName: "Übereinkommen über ein einheitliches Patentgericht",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
+	},
+	"UPCA": {
+		vollerName: "Agreement on a Unified Patent Court",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
+	},
+	"DOEPS": {
+		vollerName: "Durchführungsordnung zum einheitlichen Patentschutz",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
+	},
+	"UPR": {
+		vollerName: "Rules relating to Unitary Patent Protection",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
+	},
+	"GebOEPS": {
+		vollerName: "Gebührenordnung zum einheitlichen Patentschutz",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/upf.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/upf_{num}.html"
+	},
+	"VO 1257/2012": {
+		vollerName: "VO 1257/2012",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/eu20121257.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/eu20121257_{num}.html"
+	},
+	"VO 1260/2012": {
+		vollerName: "VO 1260/2012",
+		gesamterText: "https://www.epo.org/de/legal/up-upc/2022/eu20121260.html",
+		einzelneNorm: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
+	},
+	"UMV": {
+		vollerName: "Unionsmarkenverordnung",
+		gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001",
+		einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001#art_{num}"
+	},
+	// ------------------------
+	// International
+	// ------------------------
+	"PVÜ": {
+		vollerName: "Pariser Verbandsübereinkunft",
+		gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002271",
+		einzelneNorm: "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002271&Artikel={num}"
+		},
+	"PCT": {
+		vollerName: "Patentzusammenarbeitsvertrag",
+		gesamterText: "https://www.wipo.int/pct/de/texts/articles/atoc.html",
+		einzelneNorm: "https://www.wipo.int/pct/de/texts/articles/a{num}.html"
+		},
+	"PCT AusfO": {
+		vollerName: "Patentzusammenarbeitsvertrag Ausführungsordnung",
+		gesamterText: "https://www.wipo.int/pct/en/texts/rules/rtoc_short.html",
+		einzelneNorm: "https://www.wipo.int/pct/en/texts/rules/r{num}.html"
+		},
+	"PCT VerwV": {
+		vollerName: "Patentzusammenarbeitsvertrag Verwaltungsvorschriften",
+		gesamterText: "https://www.wipo.int/pct/en/texts/ai/ai_index.html",
+		einzelneNorm: "https://www.wipo.int/pct/en/texts/ai/s{num}.html"
 		}
-    };
-    const paragrafMappingsOriginal = {
-        "PatG": "10002181", "GMG": "10003230", "MSchG": "10002180",
-        "MuSchG": "10002963", "PatV-EG": "10002458",
-        "PatAnwG": "10002093", "PAG": "20003819",
-        "IO": "10001736", "EO": "10001700", "ZPO": "10001699", "ABGB": "10001622",
-        "UGB": "10001702", "KSchG": "10002462", "KartG": "20004174",
-        "UWG": "10002665", "JN": "10001697", "OGHG": "10000449", "ZustG": "10005522",
-        "GOG": "10000009", "IEG": "10001735", "AußStrG": "20003047", "RpflG": "10002703",
-        "GmbHG": "10001720", "AktG": "10002070", "AVG": "10005768", "VwGG": "10000795",
-        "VfGG": "10000245", "DepotG": "10002142", "KMG": "20010729", "BWG": "10004827",
-        "WechselG": "10001934", "GebG": "10003882", "WettbG": "20001898",
-        "ASGG": "10000813", "GEO": "10000240", "IESG": "10008418", "URG": "10003479",
-        "Reo": "20011622", "AStG": "20009242", "SchZG": "10003470", "HlSchG": "10002876",
-        "SortSchG": "20001503", "PPG": "20010791", "UrhG": "10001848", "FlexKapGG": "20012473"
-    };
-    const artikelMappingsOriginal = {
-        "PVÜ": "10002271", "B-VG": "10000138",
-        "EGJN": "10001696", "EGZPO": "10001698", "EGEO": "10001916"
-    };
-    const spezialMappingsOriginal = {
-        "EPÜ": {
-            noNumber: "https://www.epo.org/de/legal/epc/2020/convention.html",
-            withNumber: "https://www.epo.org/de/legal/epc/2020/a{num}.html"
-        },
-        "EPÜ AusfO": {
-            noNumber: "https://www.epo.org/de/legal/epc/2020/regulations.html",
-            withNumber: "https://www.epo.org/de/legal/epc/2020/r{num}.html"
-        },
-        "EPÜ GebO": {
-            noNumber: "https://www.epo.org/de/legal/epc/2020/rfees.html",
-            withNumber: "https://www.epo.org/de/legal/epc/2020/f{num}.html"
-        },
-        "PCT": {
-            noNumber: "https://www.wipo.int/pct/de/texts/articles/atoc.html",
-            withNumber: "https://www.wipo.int/pct/de/texts/articles/a{num}.html"
-        },
-        "PCT AusfO": {
-            noNumber: "https://www.wipo.int/pct/en/texts/rules/rtoc_short.html",
-            withNumber: "https://www.wipo.int/pct/en/texts/rules/r{num}.html"
-        },
-        "PCT VerwV": {
-            noNumber: "https://www.wipo.int/pct/en/texts/ai/ai_index.html",
-            withNumber: "https://www.wipo.int/pct/en/texts/ai/s{num}.html"
-        },
-        "EPGÜ": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
-        },
-        "UPCA": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upca.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upca_{num}.html"
-        },
-        "DOEPS": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
-        },
-        "UPR": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upr.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upr_{num}.html"
-        },
-        "GebOEPS": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/upf.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/upf_{num}.html"
-        },
-        "VO 1257/2012": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121257.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121257_{num}.html"
-        },
-        "VO 1260/2012": {
-            noNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260.html",
-            withNumber: "https://www.epo.org/de/legal/up-upc/2022/eu20121260_{num}.html"
-        },
-        "UMV": {
-            noNumber: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001",
-            withNumber: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001#art_{num}"
-        }
-    };
+	};
 
     // -------------------------
     // Build normalized mapping objects (lowercase & ignore hyphens)
@@ -118,18 +348,11 @@ javascript:(function(){
         return normalized;
     }
 
-    //const paragrafMappingsNorm = buildNormalizedMapping(paragrafMappingsOriginal);
-    //const artikelMappingsNorm  = buildNormalizedMapping(artikelMappingsOriginal);
-    //const spezialMappingsNorm  = buildNormalizedMapping(spezialMappingsOriginal);
 	const mappingsNorm = buildNormalizedMapping(mappingsOriginal);
 
     // -------------------------
     // Build lower-case lookup objects for suggestions (keep original casing for display)
     // -------------------------
-    //const alleGesetzeOriginal = [...Object.keys(paragrafMappingsOriginal),
-    //                              ...Object.keys(artikelMappingsOriginal),
-    //                              ...Object.keys(spezialMappingsOriginal)]
-    //    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     const alleGesetze = [...Object.keys(mappingsOriginal)].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
     // -------------------------
@@ -352,7 +575,6 @@ function updateSuggestions() {
     }
 }
 
-
     input.addEventListener("input", function(e) {
         if (!suppressInputEvent) {
             updateSuggestions();
@@ -477,12 +699,11 @@ function updateSuggestions() {
     });
 
     const style = document.createElement("style");
-    style.textContent = `
-        .hoverRed { transition: color 0.3s ease-in-out; }
-        .hoverRed:hover { color: #BC101D !important; }
-        .buttonSuche:hover { filter: brightness(105%); }
-	abbr { cursor: text; text-decoration: underline dotted; }
-    `;
+    style.textContent = 
+        ".hoverRed { transition: color 0.3s ease-in-out; }" +
+        ".hoverRed:hover { color: #BC101D !important; }" +
+        ".buttonSuche:hover { filter: brightness(105%); }" +
+	"abbr { cursor: text; text-decoration: underline dotted; }";
     
     document.head.appendChild(style);
 

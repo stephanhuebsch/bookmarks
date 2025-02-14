@@ -399,12 +399,13 @@ javascript:(function(){
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
-                input.style.border = "1px solid #BC101D";
-                input.style.backgroundColor = "#F1CFD1";
-                setTimeout(() => {
-    			    input.style.border = "1px solid #888";
-                    input.style.backgroundColor = "white";
-				}, 1000);
+                input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
+		input.style.border = "1px solid #BC101D";
+		input.style.backgroundColor = "#f1cfd1";
+		setTimeout(() => {
+			input.style.border = "1px solid #888";
+			input.style.backgroundColor = "white";
+		}, 1000);
             }
         } else {
             // No number provided.
@@ -420,12 +421,13 @@ javascript:(function(){
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
-                input.style.border = "1px solid #BC101D";
-                input.style.backgroundColor = "#F1CFD1";
-                setTimeout(() => {
-    			    input.style.border = "1px solid #888";
-                    input.style.backgroundColor = "white";
-				}, 1000);
+                input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
+		input.style.border = "1px solid #BC101D";
+		input.style.backgroundColor = "#f1cfd1";
+		setTimeout(() => {
+			input.style.border = "1px solid #888";
+			input.style.backgroundColor = "white";
+		}, 1000);
             }
         }
     }

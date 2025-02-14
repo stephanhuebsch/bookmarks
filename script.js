@@ -183,6 +183,7 @@ javascript:(function(){
     // Input field
     let input = document.createElement("input");
     input.type = "text";
+    input.placeholder = "PatG, 15a GMG, ...";
     input.style.backgroundColor = "white";
     input.style.color = "#333";
     input.style.fontFamily = "Arial";

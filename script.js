@@ -140,7 +140,7 @@ javascript:(function(){
     p_text.style.color = "#333";
     p_text.style.textAlign = "left";
     p_text.style.lineHeight = "20px";
-    p_text.innerHTML = "Bitte ein <span class='tooltip' data-tooltip='zB PatG, ZPO, EPÜ, ...'>Gesetz</span> oder einen <span class='tooltip' data-tooltip='zB 22a PatG, 381 ZPO, 123 EPÜ, ...'>konkreten Paragraphen/Artikel</span> eingeben:";
+    p_text.innerHTML = "Bitte ein <abbr title='zB PatG, ZPO, EPÜ, ...'>Gesetz</abbr> oder einen <abbr title='zB 22a PatG, 381 ZPO, 123 EPÜ, ...'>konkreten Paragraphen/Artikel</abbr> eingeben:";
     modal.appendChild(p_title);
     modal.appendChild(p_text);
 
@@ -443,9 +443,7 @@ javascript:(function(){
         .hoverRed { transition: color 0.3s ease-in-out; }
         .hoverRed:hover { color: #BC101D !important; }
         .buttonSuche:hover { filter: brightness(105%); }
-	.tooltip { position: relative; cursor: text; text-decoration: underline dotted; }
-        .tooltip::before { content: attr(data-tooltip); position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: #333; color: #f1f3f5; padding: 6px 10px; border-radius: 4px; font-size: 14px; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out; }
-        .tooltip:hover::before { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-5px); }
+	abbr { cursor: text; text-decoration: underline dotted; }
     `;
     
     document.head.appendChild(style);

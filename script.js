@@ -542,7 +542,7 @@ javascript: (function() {
 		suggestions.innerHTML = "";
 		selectedSuggestionIndex = -1;
 
-		let match = query.match(/^(?:(\d+[a-zA-Z]?\s+))?(.*)$/);
+		let match = query.match(/^(?:(\d+[a-zA-Z]*\s+))?(.*)$/);
 		let prefix = match[1] || "";
 		let searchTerm = match[2] || "";
 
@@ -665,7 +665,7 @@ javascript: (function() {
 		document.body.style.cursor = "progress";
 		let trimmed = input.value.trim().toLowerCase();
 		// Check if the input starts with a number followed by some text.
-		let match = trimmed.match(/^(\d+[a-z]?)\s+(.+)$/);
+		let match = trimmed.match(/^(\d+[a-z]*)\s+(.+)$/);
 		if (match) {
 			let number = match[1];
 			// Normalize the law key by removing hyphens.

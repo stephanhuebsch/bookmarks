@@ -382,10 +382,9 @@ javascript: (function() {
 	modal.style.transform = "translate(-50%, -50%)";
 	modal.style.background = "#F1F3F5";
 	modal.style.padding = "20px";
-	modal.style.border = "1px solid #888";
 	modal.style.borderRadius = "10px";
 	modal.style.boxShadow = "rgb(0, 0, 0) 1px 1px 0px, rgb(0, 0, 0) -1px -1px 0px, rgb(0, 0, 0) 1px -1px 0px, rgb(0, 0, 0) -1px 1px 0px";
-	modal.style.borderBottom = "6px solid rgb(136,136,136)";
+	modal.style.borderBottom = "6px solid #888";
 	modal.style.zIndex = "10000";
 	modal.style.textAlign = "center";
 	modal.style.fontSize = "16px";

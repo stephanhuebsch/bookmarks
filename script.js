@@ -428,6 +428,7 @@ javascript:(function(){
 
     const style = document.createElement("style");
     style.textContent = `
+        .hoverRed { transition: color 0.3s ease-in-out; }
         .hoverRed:hover { color: #BC101D !important; }
     `;
     

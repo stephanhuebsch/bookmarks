@@ -104,6 +104,22 @@ javascript:(function(){
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
     // -------------------------
+    // Create overlay
+    // -------------------------
+    let backdrop = document.createElement("div");
+    backdrop.style.position = "fixed";
+    backdrop.style.top = "0";
+    backdrop.style.left = "0";
+    backdrop.style.width = "100vw";
+    backdrop.style.height = "100vh";
+    backdrop.style.background = "rgba(0, 0, 0, 0.5)";
+    backdrop.style.zIndex = "9999";
+    backdrop.style.pointerEvents = "auto";
+
+    document.body.style.overflow = "hidden"; // Disable page scrolling
+    document.body.appendChild(backdrop);
+
+    // -------------------------
     // Create modal elements
     // -------------------------
     let modal = document.createElement("div");
@@ -164,6 +180,7 @@ javascript:(function(){
     closeButton.style.boxShadow = "none";
     closeButton.style.textShadow = "none";
     closeButton.onclick = function() {
+        backdrop.remove();
         modal.remove();
         document.removeEventListener("keydown", escHandler);
         document.body.style.cursor = "default";
@@ -419,6 +436,7 @@ javascript:(function(){
     button.onclick = submitInput;
     document.addEventListener("keydown", function(event) {
         if (event.key === "Escape") {
+            backdrop.remove();
             modal.remove();
             document.body.style.cursor = "default";
         }

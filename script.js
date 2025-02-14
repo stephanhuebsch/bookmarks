@@ -315,6 +315,11 @@ javascript: (function() {
 		// ------------------------
 		// International
 		// ------------------------
+		"Genfer Akte": {
+			vollerName: "Haager Musterabkommen Genfer Akte",
+			gesamterText: "https://www.wipo.int/wipolex/en/text/285214",
+			einzelneNorm: "https://www.wipo.int/wipolex/en/text/285214#article{num}"
+		},
 		"MMP": {
 			vollerName: "Madrider Markenprotokoll",
 			gesamterText: "https://www.wipo.int/wipolex/en/text/283484",

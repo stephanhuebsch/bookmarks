@@ -5,8 +5,8 @@ javascript:(function(){
 	const mappingsOriginal = {
 		"PatG": {
 		"vollerName": "Patentgesetz",
-        "gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181",
-        "einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181&Paragraf={num}"
+		"gesamterText": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181",
+		"einzelneNorm": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002181&Paragraf={num}"
 		},
 	"GMG": {
 		"vollerName": "Gebrauchsmustergesetz",
@@ -118,18 +118,18 @@ javascript:(function(){
         return normalized;
     }
 
-    const paragrafMappingsNorm = buildNormalizedMapping(paragrafMappingsOriginal);
-    const artikelMappingsNorm  = buildNormalizedMapping(artikelMappingsOriginal);
-    const spezialMappingsNorm  = buildNormalizedMapping(spezialMappingsOriginal);
+    //const paragrafMappingsNorm = buildNormalizedMapping(paragrafMappingsOriginal);
+    //const artikelMappingsNorm  = buildNormalizedMapping(artikelMappingsOriginal);
+    //const spezialMappingsNorm  = buildNormalizedMapping(spezialMappingsOriginal);
 	const mappingsNorm = buildNormalizedMapping(mappingsOriginal);
 
     // -------------------------
     // Build lower-case lookup objects for suggestions (keep original casing for display)
     // -------------------------
-    const alleGesetzeOriginal = [...Object.keys(paragrafMappingsOriginal),
-                                  ...Object.keys(artikelMappingsOriginal),
-                                  ...Object.keys(spezialMappingsOriginal)]
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    //const alleGesetzeOriginal = [...Object.keys(paragrafMappingsOriginal),
+    //                              ...Object.keys(artikelMappingsOriginal),
+    //                              ...Object.keys(spezialMappingsOriginal)]
+    //    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     const alleGesetze = [...Object.keys(mappingsOriginal)].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
     // -------------------------
@@ -313,7 +313,7 @@ javascript:(function(){
         let searchTerm = match[2] || "";
         // Remove hyphens for matching purposes.
         let sanitizedSearchTerm = searchTerm.replace(/-/g, '');
-        let matches = alleGesetzeOriginal.filter(gesetz => {
+        let matches = alleGesetze.filter(gesetz => {
             let sanitizedGesetz = gesetz.toLowerCase().replace(/-/g, '');
             return sanitizedGesetz.includes(sanitizedSearchTerm);
         });

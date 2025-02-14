@@ -400,6 +400,12 @@ javascript:(function(){
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
+                input.style.border = "1px solid #BC101D";
+                input.style.backgroundColor = "#F1CFD1";
+                setTimeout(() => {
+    			    input.style.border = "1px solid #888";
+                    input.style.backgroundColor = "white";
+				}, 1000);
             }
         } else {
             // No number provided.
@@ -415,6 +421,12 @@ javascript:(function(){
             } else {
                 console.log("Ungültige Eingabe.");
                 document.body.style.cursor = "default";
+                input.style.border = "1px solid #BC101D";
+                input.style.backgroundColor = "#F1CFD1";
+                setTimeout(() => {
+    			    input.style.border = "1px solid #888";
+                    input.style.backgroundColor = "white";
+				}, 1000);
             }
         }
     }

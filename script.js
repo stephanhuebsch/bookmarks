@@ -146,7 +146,7 @@ javascript:(function(){
 
     // Close button
     let closeButton = document.createElement("button");
-    closeButton.textContent = "X";
+    closeButton.textContent = "✕";
     closeButton.classList.add("hoverRed");
     closeButton.style.position = "absolute";
     closeButton.style.top = "3px";

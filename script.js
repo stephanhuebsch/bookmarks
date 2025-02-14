@@ -315,6 +315,16 @@ javascript: (function() {
 		// ------------------------
 		// International
 		// ------------------------
+		"MMP": {
+			vollerName: "Madrider Markenprotokoll",
+			gesamterText: "https://www.wipo.int/wipolex/en/text/283484",
+			einzelneNorm: "https://www.wipo.int/wipolex/en/text/283484"
+		},
+		"MMP AusfO": {
+			vollerName: "Madrider Markenprotokoll Ausführungsordnung",
+			gesamterText: "https://www.wipo.int/wipolex/en/text/586467",
+			einzelneNorm: "https://www.wipo.int/wipolex/en/text/586467#rule{num}"
+		},
 		"PVÜ": {
 			vollerName: "Pariser Verbandsübereinkunft",
 			gesamterText: "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002271",

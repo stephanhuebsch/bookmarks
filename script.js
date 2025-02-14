@@ -227,6 +227,7 @@ javascript:(function(){
     // Submit button
     let button = document.createElement("button");
     button.innerText = "Suche";
+    button.classList.add("buttonSuche");    
     button.style.margin = "0 0 0 10px";
     button.style.padding = "3px 8px";
     button.style.fontSize = "16px";
@@ -430,6 +431,7 @@ javascript:(function(){
     style.textContent = `
         .hoverRed { transition: color 0.3s ease-in-out; }
         .hoverRed:hover { color: #BC101D !important; }
+        .buttonSuche:hover { filter: brightness(105%); }
     `;
     
     document.head.appendChild(style);

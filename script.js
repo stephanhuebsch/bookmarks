@@ -117,7 +117,8 @@ javascript:(function(){
     modal.style.padding = "20px";
     modal.style.border = "1px solid #888";
     modal.style.borderRadius = "10px";
-    modal.style.boxShadow = "rgba(0, 0, 0, 0.4) 6px 6px 12px";
+    modal.style.boxShadow = "rgb(0, 0, 0) 1px 1px 0px, rgb(0, 0, 0) -1px -1px 0px, rgb(0, 0, 0) 1px -1px 0px, rgb(0, 0, 0) -1px 1px 0px";
+    modal.style.borderBottom = "6px solid rgb(136,136,136)";
     modal.style.zIndex = "10000";
     modal.style.textAlign = "center";
     modal.style.fontSize = "16px";

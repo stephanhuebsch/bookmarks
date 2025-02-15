@@ -687,10 +687,12 @@ javascript: (function() {
 				input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
 				input.style.border = "1px solid #BC101D";
 				input.style.backgroundColor = "#f1cfd1";
+				input.classList.add("wiggle");
 				setTimeout(() => {
 					input.style.border = "1px solid #888";
 					input.style.backgroundColor = "white";
-				}, 1000);
+					input.classList.remove("wiggle");
+				}, 600);
 			}
 		} else {
 			// No number provided.
@@ -709,7 +711,7 @@ javascript: (function() {
 					input.style.border = "1px solid #888";
 					input.style.backgroundColor = "white";
 					input.classList.remove("wiggle");
-				}, 1000);
+				}, 600);
 			}
 		}
 	}

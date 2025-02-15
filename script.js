@@ -406,7 +406,7 @@ javascript: (function() {
 	p_text.style.color = "#333";
 	p_text.style.textAlign = "left";
 	p_text.style.lineHeight = "20px";
-	p_text.innerHTML = "Bitte ein <abbr title='zB PatG, ZPO, EPÜ, ...'>Gesetz</abbr> oder einen <abbr title='zB 22a PatG, 381 ZPO, 123 EPÜ, ...'>konkreten Paragraphen/Artikel</abbr> eingeben:";
+	p_text.innerHTML = "Bitte ein <abbr title='zB PatG, ZPO, EPÜ, ...'>Gesetz</abbr> oder einen <abbr title='zB 22a PatG, 393 ZPO, 123 EPÜ, ...'>konkreten Paragraphen/Artikel</abbr> eingeben:";
 	modal.appendChild(p_title);
 	modal.appendChild(p_text);
 

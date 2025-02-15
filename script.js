@@ -704,9 +704,11 @@ javascript: (function() {
 				input.style.transition = "border 0.3s ease-in-out, background-color 0.3s ease-in-out";
 				input.style.border = "1px solid #BC101D";
 				input.style.backgroundColor = "#f1cfd1";
+				input.classList.add("wiggle");
 				setTimeout(() => {
 					input.style.border = "1px solid #888";
 					input.style.backgroundColor = "white";
+					input.classList.remove("wiggle");
 				}, 1000);
 			}
 		}
@@ -725,7 +727,9 @@ javascript: (function() {
 		".hoverRed { transition: color 0.3s ease-in-out; }" +
 		".hoverRed:hover { color: #BC101D !important; }" +
 		".buttonSuche:hover { filter: brightness(105%); }" +
-		"abbr { cursor: text; text-decoration: underline dotted; }";
+		"abbr { cursor: text; text-decoration: underline dotted; }" +
+		"@keyframes wiggle { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }" +
+		".wiggle { animation: wiggle 0.3s ease-in-out; }";
 
 	document.head.appendChild(style);
 

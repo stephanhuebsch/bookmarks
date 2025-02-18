@@ -352,6 +352,19 @@ javascript: (function() {
 		}
 	};
 
+	// bis, ter -> a, b (zB für PVÜ im RIS)
+	const bis_zu_a = {
+		"bis": "a",
+		"quater": "c",
+		"ter": "b", // ter muss nach quater kommen, weil sonst [qua]ter gematcht wird
+		"quinquies": "d",
+		"sexies": "e",
+		"septies": "f",
+		"octies": "g",
+		"novies": "h",
+		"decies": "i"
+	};
+
 	// -------------------------
 	// Build normalized mapping objects (lowercase & ignore hyphens)
 	// -------------------------
@@ -678,6 +691,13 @@ javascript: (function() {
 			// Check for mapping
 			if (mappingsNorm.hasOwnProperty(lawKey)) {
 				let urlTemplate = mappingsNorm[lawKey].einzelneNorm;
+				if (lawKey == "pvü") {
+					for (const [key, value] of Object.entries(bis_zu_a)) {
+						if (number.endsWith(key)) {
+							number = number.slice(0, -key.length) + value;
+						 }
+					}
+				}
 				let finalUrl = urlTemplate.replace("{num}", number);
 				window.location.href = finalUrl;
 				return;

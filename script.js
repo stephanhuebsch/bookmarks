@@ -312,6 +312,21 @@ javascript: (function() {
 			gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001",
 			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?qid=1506417891296&uri=CELEX:32017R1001#art_{num}"
 		},
+		"Brüssel Ia": {
+			vollerName: "Europäische Gerichtsstands- und Vollstreckungsverordnung",
+			gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02012R1215-20150226",
+			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02012R1215-20150226"
+		},
+		"EuGVVO": {
+			vollerName: "Europäische Gerichtsstands- und Vollstreckungsverordnung",
+			gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02012R1215-20150226",
+			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02012R1215-20150226"
+		},
+		"EuInsVO": {
+			vollerName: "Verordnung über Insolvenzverfahren",
+			gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32015R0848",
+			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32015R0848"
+		},
 		// ------------------------
 		// International
 		// ------------------------

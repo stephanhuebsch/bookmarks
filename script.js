@@ -323,7 +323,7 @@ javascript: (function() {
 			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:02012R1215-20150226"
 		},
 		"EuInsVO": {
-			vollerName: "Verordnung über Insolvenzverfahren",
+			vollerName: "Europäische Verordnung über Insolvenzverfahren",
 			gesamterText: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32015R0848",
 			einzelneNorm: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32015R0848"
 		},

@@ -1,4 +1,4 @@
-javascript: (function() {
+//javascript: (function() {
 	// ------------------------
 	// Define mapping objects
 	// ------------------------
@@ -772,4 +772,4 @@ javascript: (function() {
 
 	document.body.appendChild(modal);
 	input.focus();
-})();
+//})();

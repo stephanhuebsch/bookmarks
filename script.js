@@ -1,4 +1,4 @@
-//javascript: (function() {
+(function() {
 	// ------------------------
 	// Define mapping objects
 	// ------------------------
